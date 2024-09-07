@@ -1,0 +1,41 @@
+Table cities {
+  city_id int [pk, increment] // Primary Key
+  city_name varchar(50)
+  latitude float
+  longitude float
+}
+
+Table users {
+  user_id int [pk, increment] // Primary Key
+  name varchar(100)
+  contact varchar(20)
+  city_id int [ref: > cities.city_id] // Foreign Key to cities
+}
+
+Table cars {
+  product_id int [pk, increment] // Primary Key
+  brand varchar(50)
+  model varchar(50)
+  body_type varchar(50)
+  year int
+  price decimal(12, 2)
+  city_id int [ref: > cities.city_id] // Foreign Key to cities
+  user_id int [ref: > users.user_id] // Foreign Key to users
+  description text
+}
+
+Table ads {
+  ad_id int [pk, increment] // Primary Key
+  title varchar(100)
+  product_id int [ref: > cars.product_id] // Foreign Key to cars
+  user_id int [ref: > users.user_id] // Foreign Key to users
+  allow_bid boolean
+}
+
+Table bids {
+  bid_id int [pk, increment] // Primary Key
+  product_id int [ref: > cars.product_id] // Foreign Key to cars
+  user_id int [ref: > users.user_id] // Foreign Key to users
+  bid_price decimal(12, 2)
+  bid_date timestamp
+}
